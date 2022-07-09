@@ -32,7 +32,7 @@ def create_script(in_dir: str, out_arc_name: str, out_arc_path: str, repo: str, 
 ######## CONFIG ########
 
 # !! IMPORTANT: YOU MIGHT WANT TO CHANGE THESE VARIABLES !!
-
+# !! IMPORANT: YOU NEED TO SET EXECUTABLE PERMS FOR THIS SCRIPT BEFORE RUNNING !!
 # => Location the mods will be downloaded to (default: your mod folder)
 # Path to the archive that will be created
 ARC_DIR={out_arc_path}
