@@ -25,7 +25,7 @@ def create_script(in_dir: str, out_arc_name: str, out_arc_path: str, repo: str, 
         repo += '/'
     with open(out_file, 'a') as out_file:
         print(
-            f"""#! /bin/bash      
+f"""#! /bin/bash      
             
 # !! IMPORTANT: YOU NEED TO SET EXECUTABLE PERMS FOR THIS SCRIPT BEFORE RUNNING !!
 
