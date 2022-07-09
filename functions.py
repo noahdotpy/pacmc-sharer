@@ -25,24 +25,37 @@ def create_script(in_dir: str, out_arc_name: str, out_arc_path: str, repo: str, 
         repo += '/'
     with open(out_file, 'a') as out_file:
         print(
-            f"""#! /bin/bash
+            f"""#! /bin/bash      
+            
+# !! IMPORTANT: YOU NEED TO SET EXECUTABLE PERMS FOR THIS SCRIPT BEFORE RUNNING !!
+
 
 ######## CONFIG ########
 
-# !! IMPORTANT: YOU MIGHT WANT TO CHANGE THESE VARIABLES !!
-# !! IMPORANT: YOU NEED TO SET EXECUTABLE PERMS FOR THIS SCRIPT BEFORE RUNNING !!
-# => Location the mods will be downloaded to (default: your mod folder)
+
+# => Archive which the mods will be downloaded to.
+
 # Path to the archive that will be created
-ARC_DIR={out_arc_path}
+echo -n "Where do you want this new archive? "
+read ARC_DIR # assign input value into a variable
+
 # Unique name/identifier for the archive that will be created
-ARC_NAME=\'{out_arc_name}\'
+echo -n "What do you want your archive to be called? "
+read ARC_NAME # assign input value into a variable
 
 # => Repository to be downloaded from (modrinth, curseforge, etc...)
-# ! Set to '' to disable automatic repo choosing
-# ! Must have a / at the end ( modrinth/ )
-REPO=\'{repo}\'
+echo -n "What repo do you want to use? (modrinth, curseforge, ENTER to choose for each mod) "
+read REPO # assign input value into a variable
 
-# => Version of Minecraft that this archive is based on
+if [ "$REPO" = "" ]
+then
+    echo "Repo: None"
+else
+    REPO+="/"
+    echo "Repo: $REPO"
+fi
+
+# => Version of Minecraft (RECOMMENDED NOT TO CHANGE THIS SETTING)
 GAME_VERSION=\'{game_version}\'
 
 ######## CREATE ARCHIVE AND INSTALL MODS ########
