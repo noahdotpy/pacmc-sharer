@@ -6,8 +6,6 @@ def main():
     parser = argparse.ArgumentParser(
         description="A Simple Pacmc Archive Sharer.")
     group = parser.add_argument_group()
-    # group.add_argument('--create-script', '-c', action='store', nargs=3, metavar=('<In-archive path>',
-    #                 '<Out-archive name>', '<Out-archive path>'), help='Create a script to share your archive with others.')
     group.add_argument(
         'in_arc_path', help='Path to the archive you want to share.')
     group.add_argument(

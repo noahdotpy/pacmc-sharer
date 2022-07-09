@@ -4,7 +4,6 @@ from os.path import isfile, join
 
 def create_script(in_dir: str, out_arc_name: str, out_arc_path: str, repo: str, out_file: str, game_version: str):
     # Logic to get the ids and names of mods in the in_dir
-    print(in_dir, out_arc_name, out_arc_path, repo, out_file, sep='\n')
     valid_files = {}
     files = [f for f in listdir(in_dir) if isfile(join(in_dir, f))]
     for index, file in enumerate(files):
