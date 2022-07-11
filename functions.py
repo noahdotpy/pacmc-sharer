@@ -3,19 +3,21 @@ from os.path import isfile, join
 
 import pyperclip
 
-def create_script(in_dir: str, repo: str, out_file_arg: str, game_version: str, short: bool):
-    # Logic to get the ids and names of mods in the in_dir
+def create_script(archive_path: str, repo: str, out_file_arg: str, game_version: str, short: bool):
+    # Logic to get the ids and names of mods in the archive_path
     valid_files = {}
-    files = [f for f in listdir(in_dir) if isfile(join(in_dir, f))]
+    files = [f for f in listdir(archive_path) if isfile(join(archive_path, f))]
+    
+    # Checking for valid files and adding them to valid_files if True
     for index, file in enumerate(files):
-        splitted = file.split('_mr_')
-        mod_name = splitted[0]
-        mod_id = splitted[1].split('.pacmc.jar')[0]
+        if file.endswith('.pacmc.jar'):
+            splitted = file.split('_mr_')
+            mod_name = splitted[0]
+            mod_id = splitted[1].split('.pacmc.jar')[0]
 
-        valid_files[mod_id] = {
-            'name': mod_name
-        }
-
+            valid_files[mod_id] = {
+                'name': mod_name
+            }
     # Empty the output file
     with open(out_file_arg, 'w') as file:
         print('', file=file)
