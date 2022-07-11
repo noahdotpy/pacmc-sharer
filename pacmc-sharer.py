@@ -16,7 +16,6 @@ def main():
         '<Game version>',), help='Which version of minecraft is the archive for?', required=True)
     group.add_argument('--short', '-s', action='store_true', default=False, help='Used to get a short, one-line version of the normal script code.')
     args = parser.parse_args()
-    print(args, end="\n\n")
     create_script(args.archive_path, args.repo[0], args.file[0], args.game_version[0], args.short)
 
 
