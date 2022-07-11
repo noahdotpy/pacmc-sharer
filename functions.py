@@ -17,7 +17,6 @@ def create_script(archive_path: str, repo: str, out_file_arg: str, game_version:
             if '_cf_' in file: # curseforge
                 splitted = file.split('_cf_')
                 mod_repo = "curseforge/"
-            print(file)
             mod_name = splitted[0]
             mod_id = splitted[1].split('.pacmc.jar')[0]
             valid_files[mod_id] = {
