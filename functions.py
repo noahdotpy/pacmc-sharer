@@ -11,12 +11,18 @@ def create_script(archive_path: str, repo: str, out_file_arg: str, game_version:
     # Checking for valid files and adding them to valid_files if True
     for index, file in enumerate(files):
         if file.endswith('.pacmc.jar'):
-            splitted = file.split('_mr_')
+            if '_mr_' in file: # modrinth
+                splitted = file.split('_mr_')
+                mod_repo = "modrinth/"
+            if '_cf_' in file: # curseforge
+                splitted = file.split('_cf_')
+                mod_repo = "curseforge/"
+            print(file)
             mod_name = splitted[0]
             mod_id = splitted[1].split('.pacmc.jar')[0]
-
             valid_files[mod_id] = {
-                'name': mod_name
+                'name': mod_name,
+                'repo': mod_repo
             }
     # Empty the output file
     with open(out_file_arg, 'w') as file:
@@ -27,7 +33,7 @@ def create_script(archive_path: str, repo: str, out_file_arg: str, game_version:
         repo += '/'
     with open(out_file_arg, 'a') as out_file:
         if short:
-            short_script = f"""echo -n "Where do you want this new archive? "; read ARC_DIR && echo -n "What do you want your archive to be called? "; read ARC_NAME; echo -n "What repo do you want to use? (modrinth, curseforge, ENTER to choose for each mod) "; read REPO; if [ "$REPO" = "" ]; then echo "Repo: None"; else REPO+="/"; echo "Repo: $REPO"; fi; GAME_VERSION=\'{game_version}\'; pacmc archive create $ARC_NAME $ARC_DIR; pacmc archive version $ARC_NAME --game-version $GAME_VERSION; """ + '; '.join([r'pacmc install ${REPO}' + valid_files[mod_id]["name"] + ' -y -a $ARC_NAME' for mod_id in valid_files])
+            short_script = f"""echo -n "Where do you want this new archive? "; read ARC_DIR && echo -n "What do you want your archive to be called? "; read ARC_NAME; echo -n "What repo do you want to use? (modrinth, curseforge, ENTER to choose for each mod) "; read REPO; if [ "$REPO" = "" ]; then echo "Repo: None"; else REPO+="/"; echo "Repo: $REPO"; fi; GAME_VERSION=\'{game_version}\'; pacmc archive create $ARC_NAME $ARC_DIR; pacmc archive version $ARC_NAME --game-version $GAME_VERSION; """r"pacmc install ${REPO} -y -a $ARC_NAME " + ' '.join([valid_files[mod_id]["repo"]+ valid_files[mod_id]["name"] for mod_id in valid_files])
             print(short_script, file=out_file)
             pyperclip.copy(short_script)
             print("Script copied to clipboard successfully!")
@@ -70,10 +76,11 @@ pacmc archive create $ARC_NAME $ARC_DIR
 pacmc archive version $ARC_NAME --game-version $GAME_VERSION
 
 # All the individual install scripts
-"""
+""" + 
+r"""pacmc install ${REPO} -y -a $ARC_NAME """
             +
-            '\n'.join(
-                [r'pacmc install ${REPO}' + valid_files[mod_id]["name"] + ' -y -a $ARC_NAME' for mod_id in valid_files]),
+            ' '.join(
+                [valid_files[mod_id]["repo"] + valid_files[mod_id]["name"] for mod_id in valid_files]),
             file=out_file
         )
     print("Created file at " + out_file_arg)
