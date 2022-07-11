@@ -32,7 +32,7 @@ def create_script(archive_path: str, repo: str, out_file_arg: str, game_version:
         repo += '/'
     with open(out_file_arg, 'a') as out_file:
         if short:
-            short_script = f"""echo -n "Where do you want this new archive? "; read ARC_DIR && echo -n "What do you want your archive to be called? "; read ARC_NAME; echo -n "What repo do you want to use? (modrinth, curseforge, ENTER to choose for each mod) "; read REPO; if [ "$REPO" = "" ]; then echo "Repo: None"; else REPO+="/"; echo "Repo: $REPO"; fi; GAME_VERSION=\'{game_version}\'; pacmc archive create $ARC_NAME $ARC_DIR; pacmc archive version $ARC_NAME --game-version $GAME_VERSION; """r"pacmc install ${REPO} -y -a $ARC_NAME " + ' '.join([valid_files[mod_id]["repo"]+ valid_files[mod_id]["name"] for mod_id in valid_files])
+            short_script = f"""echo -n "Where do you want this new archive? "; read ARC_DIR && echo -n "What do you want your archive to be called? "; read ARC_NAME; echo -n "What repo do you want to use? (modrinth, curseforge, ENTER to choose for each mod) "; read REPO; if [ "$REPO" = "" ]; then echo "Repo: None"; else REPO+="/"; echo "Repo: $REPO"; fi; GAME_VERSION=\'{game_version}\'; pacmc archive create $ARC_NAME $ARC_DIR; pacmc archive version $ARC_NAME --game-version $GAME_VERSION; """r"pacmc install -y -a $ARC_NAME " + ' '.join([valid_files[mod_id]["repo"]+ valid_files[mod_id]["name"] for mod_id in valid_files])
             print(short_script, file=out_file)
             pyperclip.copy(short_script)
             print("Script copied to clipboard successfully!")
@@ -56,15 +56,6 @@ read ARC_DIR # assign input value into a variable
 echo -n "What do you want your archive to be called? "
 read ARC_NAME # assign input value into a variable
 
-# => Repository to be downloaded from (modrinth, curseforge, etc...)
-echo -n "What repo do you want to use? (modrinth, curseforge, ENTER to choose for each mod) "
-read REPO # assign input value into a variable
-
-if [ "$REPO" = "" ]
-then echo "Repo: None"
-else REPO+="/"; echo "Repo: $REPO"
-fi
-
 # => Version of Minecraft (RECOMMENDED NOT TO CHANGE THIS SETTING)
 GAME_VERSION=\'{game_version}\'
 
@@ -76,7 +67,7 @@ pacmc archive version $ARC_NAME --game-version $GAME_VERSION
 
 # All the individual install scripts
 """ + 
-r"""pacmc install ${REPO} -y -a $ARC_NAME """
+r"""pacmc install -y -a $ARC_NAME """
             +
             ' '.join(
                 [valid_files[mod_id]["repo"] + valid_files[mod_id]["name"] for mod_id in valid_files]),
