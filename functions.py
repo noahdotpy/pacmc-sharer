@@ -9,7 +9,7 @@ def create_script(py_args):
     
     # Checking for valid files and adding them to mods list if True
     for mod_file in files:
-        # check if the .jar is a valid pacmc file
+        # check if the file is a valid pacmc file
         if mod_file.endswith('.pacmc.jar'):
             # modrinth
             if '_mr_' in mod_file:
@@ -29,7 +29,7 @@ def create_script(py_args):
     if py_args.file:
         with open(py_args.file, 'w') as out_file:
             print(mods_list_as_str , file=out_file)
-            print("INFO: Created file at " + py_args.file)
+            print("INFO: Created file at: " + py_args.file)
 
     if py_args.copy:
         pyperclip.copy(mods_list_as_str )
