@@ -4,7 +4,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="A Simple Pacmc Archive Sharer.")
+        description="Scans your specified folder for mods downloaded with the PacMC package manager and outputs all valid PacMC mods in the folder.")
     group = parser.add_argument_group()
     
     group.add_argument('archive_path', help='Path to the archive you are pulling mods list from.')
