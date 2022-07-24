@@ -8,16 +8,16 @@ def create_script(py_args):
     files = [f for f in listdir(py_args.archive_path) if isfile(join(py_args.archive_path, f))]
     
     # Checking for valid files and adding them to mods list if True
-    for file in files:
+    for mod_file in files:
         # check if the .jar is a valid pacmc file
-        if file.endswith('.pacmc.jar'):
+        if mod_file.endswith('.pacmc.jar'):
             # modrinth
-            if '_mr_' in file:
-                splitted = file.split('_mr_')
+            if '_mr_' in mod_file:
+                splitted = mod_file.split('_mr_')
                 mod_repo = "modrinth/"
             # curseforge
-            if '_cf_' in file:
-                splitted = file.split('_cf_')
+            if '_cf_' in mod_file:
+                splitted = mod_file.split('_cf_')
                 mod_repo = "curseforge/"
             if not py_args.include_repo:
                 mod_repo = ""
